@@ -111,7 +111,7 @@ CKEDITOR.plugins.add( 'onchange',
 
 						var keyCode = event.data.$.keyCode;
 						// Filter movement keys and related
-						if (keyCode==8 || keyCode == 13 || keyCode == 32 || ( keyCode >= 46 && keyCode <= 90) || ( keyCode >= 96 && keyCode <= 111) || ( keyCode >= 186 && keyCode <= 222)   )
+						if (keyCode==8 || keyCode == 13 || keyCode == 32 || ( keyCode >= 46 && keyCode <= 90) || ( keyCode >= 96 && keyCode <= 111) || ( keyCode >= 186 && keyCode <= 222) || keyCode == 229)
 							somethingChanged();
 					});
 
@@ -127,22 +127,22 @@ CKEDITOR.plugins.add( 'onchange',
 				if ( editor.mode != 'source' )
 					return;
 
-				editor.textarea.on( 'keydown', function( event )
+				var textarea = (editor.textarea || editor._.editable);
+				textarea.on( 'keydown', function( event )
 					{
 						// Do not capture CTRL hotkeys.
 						if ( !event.data.$.ctrlKey && !event.data.$.metaKey )
 							somethingChanged();
 					});
 
-				editor.textarea.on( 'drop', somethingChanged);
-				editor.textarea.on( 'input', somethingChanged);
+				textarea.on( 'drop', somethingChanged);
+				textarea.on( 'input', somethingChanged);
 				if (CKEDITOR.env.ie)
 				{
-					editor.textarea.on( 'cut', somethingChanged);
-					editor.textarea.on( 'paste', somethingChanged);
+					textarea.on( 'cut', somethingChanged);
+					textarea.on( 'paste', somethingChanged);
 				}
 			});
-
 
 	} //Init
 } );
