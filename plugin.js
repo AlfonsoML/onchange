@@ -94,12 +94,15 @@ CKEDITOR.plugins.add( 'onchange',
 				if ( observer )
 				{
 					// A notification is fired right now, but we don't want it so soon
-					setTimeout( function() {
-						observer.observe( editor.document.getBody().$, {
-							attributes: true,
-							childList: true,
-							characterData: true
-						  });
+					var interval = setInterval( function() {
+						if ( typeof editor.document === 'object' ) {
+							observer.observe( editor.document.getBody().$, {
+								attributes: true,
+								childList: true,
+								characterData: true
+							});
+							clearInterval(interval);
+						}
 					}, 100);
 				}
 
